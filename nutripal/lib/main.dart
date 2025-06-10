@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.center, 
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
                 children: [
                   _dayColumn("T", "05"),
                   _dayColumn("F", "06"),
