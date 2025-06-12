@@ -11,28 +11,61 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          leading: Icon(Icons.apple),
-          title: Text("NutriPal"),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
-                children: [
-                  _dayColumn("T", "05"),
-                  _dayColumn("F", "06"),
-                  _dayColumn("S", "07"),
-                  _dayColumn("S", "08"),
-                  _dayColumn("M", "09"),
-                  _dayColumn("T", "10"),
-                  _dayColumn("W", "11"),
-                ],
-              ),
-            ],
-          )
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.apple, size: 30, color: Colors.black),
+                          SizedBox(width: 2),
+                          Text("NutriPal"),
+                        ]
+                        
+                      ),
+                      Column(
+                        children: [
+                          Text("Good Morning!"),
+                          Text("Let's track your nutrition today")
+                        ],
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              Icon(Icons.local_fire_department_rounded, color:Colors.red),
+                              SizedBox(width: 3),
+                              Text("0")
+                            ],
+                          )
+                        ),
+                      )
+                    ],
+                  )
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+                  children: [
+                    _dayColumn("T", "05"),
+                    _dayColumn("F", "06"),
+                    _dayColumn("S", "07"),
+                    _dayColumn("S", "08"),
+                    _dayColumn("M", "09"),
+                    _dayColumn("T", "10"),
+                    _dayColumn("W", "11"),
+                  ],
+                ),
+              ],
+            )
+          ) 
         ) 
+        
         
       ),
     );
