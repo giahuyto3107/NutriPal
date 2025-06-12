@@ -12,13 +12,15 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(
-          child: Center(
-            child: Column(
-              children: [
-                HeaderSection(),
-                DateSelectorRow()
-              ],
-            )
+          child: Column(
+            children: [
+              HeaderSection(),
+              DateSelectorRow(),
+              DailyCaloriesCard(),
+              // NutrientProgressRow(),
+              // RecentFoodList(),
+              // BottomNavBar(),
+            ],
           ) 
         ) 
         
@@ -36,7 +38,6 @@ class HeaderSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Icon(Icons.apple, size: 30, color: Colors.black),
           SizedBox(width: 2),
@@ -115,6 +116,59 @@ class DateSelectorRow extends StatelessWidget {
         _dayColumn("T", "10"),
         _dayColumn("W", "11"),
       ]
+    );
+  }
+}
+
+class DailyCaloriesCard extends StatelessWidget {
+  const DailyCaloriesCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+        child: Card(
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "Daily Calories",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "750 calories remaining",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      )
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "63% of daily goal reached",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      )
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
