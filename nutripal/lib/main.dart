@@ -17,8 +17,8 @@ class MainApp extends StatelessWidget {
               HeaderSection(),
               DateSelectorRow(),
               DailyCaloriesCard(),
-              // NutrientProgressRow(),
-              // RecentFoodList(),
+              NutrientProgressRow(),
+              RecentFoodList(),
               // BottomNavBar(),
             ],
           ) 
@@ -36,7 +36,7 @@ class HeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Row(
         children: [
           Icon(Icons.apple, size: 30, color: Colors.black),
@@ -100,6 +100,25 @@ class HeaderSection extends StatelessWidget {
   }
 }
 
+class NutrientProgressRow extends StatelessWidget {
+  const NutrientProgressRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Expanded(child: _nutrientProgressCard("Protein", 85, 120)),
+          Expanded(child: _nutrientProgressCard("Carbs", 140, 200)),
+          Expanded(child: _nutrientProgressCard("Fat", 45, 65)),
+        ],
+      ),
+    );
+  }
+}
+
 class DateSelectorRow extends StatelessWidget {
   const DateSelectorRow({super.key});
 
@@ -126,7 +145,7 @@ class DailyCaloriesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
         child: Card(
         child: SizedBox(
           width: double.infinity,
@@ -134,11 +153,12 @@ class DailyCaloriesCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 20),
+                padding: EdgeInsets.fromLTRB(20, 13, 0, 0),
                 child: Text(
                   "Daily Calories",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
                 ),
               ),
@@ -173,6 +193,56 @@ class DailyCaloriesCard extends StatelessWidget {
   }
 }
 
+class RecentFoodList extends StatelessWidget {
+  const RecentFoodList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                "Recently eaten",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15
+                ),
+              ),
+            ),
+            
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                color: Color(0xFFF9F8FE),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "You haven't uploaded any food",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      "Start tracking Today's meals by taking a quick pictures"
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 Widget _dayColumn(String day, String date) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 8),
@@ -189,3 +259,42 @@ Widget _dayColumn(String day, String date) {
     )
   );
 }
+
+Widget _nutrientProgressCard(String type, double current, double total) {
+  return Card(
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                  type,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13
+                  ),
+                ),
+              
+              Text(
+                "${current.toInt()}/${total.toInt()}g",
+                style: TextStyle(
+                  fontSize: 12
+                ),
+              ),
+            ]
+          ),
+          Text(
+            "${(current/total * 100).round().toInt()}% of daily goal",
+            style: TextStyle(
+              fontSize: 12
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+// Widget _uploadedSection(AboutDialog)
