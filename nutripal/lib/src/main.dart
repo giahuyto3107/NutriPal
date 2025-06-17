@@ -124,17 +124,25 @@ class DateSelectorRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
-      children: [
-        _dayColumn("T", "05"),
-        _dayColumn("F", "06"),
-        _dayColumn("S", "07"),
-        _dayColumn("S", "08"),
-        _dayColumn("M", "09"),
-        _dayColumn("T", "10"),
-        _dayColumn("W", "11"),
-      ]
+    return Padding(
+      padding: const EdgeInsets.all(1),
+      child: 
+      // SingleChildScrollView(
+      //   scrollDirection: Axis.horizontal,
+      //   child: 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _dayColumn("T", "05"),
+            _dayColumn("F", "06"),
+            _dayColumn("S", "07"),
+            _dayColumn("S", "08"),
+            _dayColumn("M", "09"),
+            _dayColumn("T", "10"),
+            _dayColumn("W", "11"),
+          ]
+        ),
+      // ),
     );
   }
 }
@@ -245,7 +253,7 @@ class RecentFoodList extends StatelessWidget {
 
 Widget _dayColumn(String day, String date) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 8),
+    padding: EdgeInsets.symmetric(horizontal: 0),
     child: Column(
       children: [
         Text(
