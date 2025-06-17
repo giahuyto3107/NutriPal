@@ -22,9 +22,43 @@ class MainApp extends StatelessWidget {
               // BottomNavBar(),
             ],
           ) 
-        ) 
+        ), 
         
-        
+        floatingActionButton: FloatingActionButton(
+          onPressed: _addNewFoodEntry,
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100)
+          ),
+          child: Icon(Icons.add, color: Colors.white,),
+        ),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 0.5,
+              color: Colors.black
+            ),
+            BottomNavigationBar(
+              backgroundColor: Color(0xffffffff),
+              // divider:
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home'
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.menu),
+                  label: 'Analytics'
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: 'Settings'
+                )
+              ]
+            )
+          ],
+        ),
       ),
     );
   }
@@ -157,43 +191,46 @@ class DailyCaloriesCard extends StatelessWidget {
         child: Card(
         child: SizedBox(
           width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 13, 0, 0),
-                child: Text(
-                  "Daily Calories",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 13, 0, 13),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    "Daily Calories",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
-              ),
-
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "750 calories remaining",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      )
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      "63% of daily goal reached",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      )
-                    ),
-                  ],
+            
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "750 calories remaining",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        )
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        "63% of daily goal reached",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        )
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -306,3 +343,7 @@ Widget _nutrientProgressCard(String type, double current, double total) {
 }
 
 // Widget _uploadedSection(AboutDialog)
+
+void _addNewFoodEntry() {
+  
+}
