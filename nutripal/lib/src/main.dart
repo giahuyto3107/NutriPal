@@ -345,5 +345,62 @@ Widget _nutrientProgressCard(String type, double current, double total) {
 // Widget _uploadedSection(AboutDialog)
 
 void _addNewFoodEntry() {
-  
+  AddNewFoodPage();
+}
+
+class AddNewFoodPage extends StatelessWidget {
+  const AddNewFoodPage({super.key});
+
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+
+      ],
+    );
+  }
+}
+
+double calculateBMR(String gender, double weight, double height, int age) {
+  if (gender == 'male') {
+    return 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    return 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+}
+
+double calculateBMI(double weightKg, double heightCm) {
+  double heightM = heightCm / 100;
+  return weightKg / (heightM * heightM);
+}
+
+// Used for multiplying BMR index
+double getActivityMultiplier(int workoutsPerWeek) {
+  if (workoutsPerWeek == 0) return 1.2;
+  if (workoutsPerWeek <= 3) return 1.375;
+  if (workoutsPerWeek <= 5) return 1.55;
+  if (workoutsPerWeek <= 7) return 1.725;
+  return 1.9;
+}
+
+double adjustForGoal(double calories, String goal, String speed) {
+  double adjustment = 0;
+  if (speed == 'slow') adjustment = 250;
+  else if (speed == 'medium') adjustment = 500;
+  else if (speed == 'fast') adjustment = 750;
+
+  if (goal == 'lose') return calories - adjustment;
+  if (goal == 'gain') return calories + adjustment;
+  return calories; // maintain
+}
+
+double estimateTimeToGoal({
+  required double currentWeight,
+  required double targetWeight,
+  required double weeklyChangeKg,
+}) {
+  double weightDifference = (targetWeight - currentWeight).abs();
+  if (weeklyChangeKg <= 0) {
+    throw ArgumentError("Weekly change must be greater than 0");
+  }
+  return weightDifference / weeklyChangeKg;
 }
