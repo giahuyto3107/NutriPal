@@ -1,74 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:nutripal/src/features/articles/presentation/view/user_input.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
-class MainApp extends StatefulWidget {
-  const MainApp({super.key});
-
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          // child: Column(
-          //   children: [
-          //     HeaderSection(),
-          //     DateSelectorRow(),
-          //     DailyCaloriesCard(),
-          //     NutrientProgressRow(),
-          //     RecentFoodList(),
-          //     // BottomNavBar(),
-          //   ],
-          // )
-          child: UserInputPage(), 
-        ), 
-        
-        floatingActionButton: FloatingActionButton(
-          onPressed: _addNewFoodEntry,
-          backgroundColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100)
-          ),
-          child: Icon(Icons.add, color: Colors.white,),
-        ),
-        
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: 0.5,
-              color: Colors.black
-            ),
-            BottomNavigationBar(
-              backgroundColor: Color(0xffffffff),
-              // divider:
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home'
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.menu),
-                  label: 'Analytics'
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: 'Settings'
-                )
-              ]
-            )
-          ],
-        ),
-      ),
+    return Column(
+      children: [
+        HeaderSection(),
+        DateSelectorRow(),
+        DailyCaloriesCard(),
+        NutrientProgressRow(),
+        RecentFoodList(),
+        // BottomNavBar(),
+      ],
     );
+          // child: UserInputPage(), 
+        
+        
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: _addNewFoodEntry,
+        //   backgroundColor: Colors.black,
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(100)
+        //   ),
+        //   child: Icon(Icons.add, color: Colors.white,),
+        // ),
+        
+        // bottomNavigationBar: Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     Container(
+        //       height: 0.5,
+        //       color: Colors.black
+        //     ),
+        //     BottomNavigationBar(
+        //       backgroundColor: Color(0xffffffff),
+        //       // divider:
+        //       items: const [
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.home),
+        //           label: 'Home'
+        //         ),
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.menu),
+        //           label: 'Analytics'
+        //         ),
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.settings),
+        //           label: 'Settings'
+        //         )
+        //       ]
+        //     )
+        //   ],
+        // ),
   }
 }
 
