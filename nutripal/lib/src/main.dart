@@ -351,6 +351,7 @@ void _addNewFoodEntry() {
 class AddNewFoodPage extends StatelessWidget {
   const AddNewFoodPage({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -384,9 +385,17 @@ double getActivityMultiplier(int workoutsPerWeek) {
 
 double adjustForGoal(double calories, String goal, String speed) {
   double adjustment = 0;
-  if (speed == 'slow') adjustment = 250;
-  else if (speed == 'medium') adjustment = 500;
-  else if (speed == 'fast') adjustment = 750;
+  if (speed == 'slow') {
+    adjustment = 250;
+  }
+    
+  else if (speed == 'medium') {
+    adjustment = 500;
+  }
+    
+  else if (speed == 'fast') {
+    adjustment = 750;
+  }
 
   if (goal == 'lose') return calories - adjustment;
   if (goal == 'gain') return calories + adjustment;
