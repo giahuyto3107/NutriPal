@@ -48,13 +48,7 @@ class _MainAppState extends State<MainApp> {
         floatingActionButton: _currentIndex == 0 // HomePage index
           ? Builder(
               builder: (context) => FloatingActionButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => UserInputPage(),
-                    isScrollControlled: true
-                  );
-                },
+                onPressed: _openUserInput,
                 backgroundColor: Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100)
