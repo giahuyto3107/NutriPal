@@ -5,18 +5,31 @@ class UserInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          MultipleChoiceSection(title: "Gender", options: ["Male", "Female"]),
-          MultipleChoiceSection(title: "Frequency of workouts per week", options: ["0-2", "3-5", "6+"]), 
-          TextFieldSection(title: "Height:", hintText: "Height input"), 
-          TextFieldSection(title: "Weight:", hintText: "Weight input"),
-          TextFieldSection(title: "DOB:", hintText: "Date of birth"),
-          MultipleChoiceSection(title: "Goal", options: ["Gain Weight", "Maintain", "Lose Weight"]),
-          TextFieldSection(title: "Desired Weight:", hintText: "Weight"),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            MultipleChoiceSection(title: "Gender", options: ["Male", "Female"]),
+            MultipleChoiceSection(title: "Frequency of workouts per week", options: ["0-2", "3-5", "6+"]), 
+            TextFieldSection(title: "Height:", hintText: "Height input"), 
+            TextFieldSection(title: "Weight:", hintText: "Weight input"),
+            TextFieldSection(title: "DOB:", hintText: "Date of birth"),
+            MultipleChoiceSection(title: "Goal", options: ["Gain Weight", "Maintain", "Lose Weight"]),
+            TextFieldSection(title: "Desired Weight:", hintText: "Weight"),
+            ElevatedButton(
+              onPressed: () {
+                
+              },
+              child: Text(
+                "Confirm",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold
+                ),
+                )
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nutripal/src/features/articles/presentation/view/user_input.dart';
 import 'package:nutripal/src/features/articles/presentation/view/home_page.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_input.dart';
 import 'package:nutripal/src/features/articles/presentation/view/settings.dart';
 import 'package:nutripal/src/features/articles/presentation/view/analytic.dart';
 
@@ -17,12 +17,19 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   int _currentIndex = 0;
+  bool _showUserInput = false;
 
   final List<Widget> _pages = [
     HomePage(),
     AnalyticsPage(),
     SettingsPage()
   ];
+
+  void _openUserInput() {
+    setState(() {
+      _showUserInput = true;
+    });
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -35,24 +42,26 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       home: Scaffold(          
         body: SafeArea(
-          child:_pages[_currentIndex], 
+          child: _showUserInput ? UserInputPage() : _pages[_currentIndex], 
         ), 
         
-        floatingActionButton: _currentIndex == 0 //HomePage index
-          ? FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
+        floatingActionButton: _currentIndex == 0 // HomePage index
+          ? Builder(
+              builder: (context) => FloatingActionButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
                     builder: (context) => UserInputPage(),
-                  )
-                );
-              },
-              backgroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100)
+                    isScrollControlled: true
+                  );
+                },
+                backgroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100)
+                ),
+                child: Icon(Icons.add, color: Colors.white,),
               ),
-              child: Icon(Icons.add, color: Colors.white,),
-           )
+            )
           : null, 
 
         bottomNavigationBar: BottomNavigationBar(
@@ -80,4 +89,3 @@ class _MainAppState extends State<MainApp> {
     );
   }
 }
-
