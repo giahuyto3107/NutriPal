@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nutripal/src/features/articles/presentation/view/home_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_input.dart';
+import 'package:nutripal/src/features/articles/presentation/view/home_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/settings.dart';
 import 'package:nutripal/src/features/articles/presentation/view/analytic.dart';
 
@@ -19,7 +19,6 @@ class _MainAppState extends State<MainApp> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    UserInputPage(),
     HomePage(),
     AnalyticsPage(),
     SettingsPage()
@@ -39,9 +38,15 @@ class _MainAppState extends State<MainApp> {
           child:_pages[_currentIndex], 
         ), 
         
-        floatingActionButton: _currentIndex == 1 //HomePage index
+        floatingActionButton: _currentIndex == 0 //HomePage index
           ? FloatingActionButton(
-              onPressed: null,
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => UserInputPage(),
+                  )
+                );
+              },
               backgroundColor: Colors.black,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100)
@@ -57,10 +62,6 @@ class _MainAppState extends State<MainApp> {
           onTap: _onTabTapped,
           currentIndex: _currentIndex,
           items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.input),
-              label: 'User Input'
-            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home'
