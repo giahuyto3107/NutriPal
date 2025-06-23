@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,48 @@ class HomePage extends StatelessWidget {
         DailyCaloriesCard(),
         NutrientProgressRow(),
         RecentFoodList(),
+        // BottomNavBar(),
       ],
     );
+          // child: UserInputPage(), 
+        
+        
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: _addNewFoodEntry,
+        //   backgroundColor: Colors.black,
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(100)
+        //   ),
+        //   child: Icon(Icons.add, color: Colors.white,),
+        // ),
+        
+        // bottomNavigationBar: Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     Container(
+        //       height: 0.5,
+        //       color: Colors.black
+        //     ),
+        //     BottomNavigationBar(
+        //       backgroundColor: Color(0xffffffff),
+        //       // divider:
+        //       items: const [
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.home),
+        //           label: 'Home'
+        //         ),
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.menu),
+        //           label: 'Analytics'
+        //         ),
+        //         BottomNavigationBarItem(
+        //           icon: Icon(Icons.SettingsPages),
+        //           label: 'SettingsPages'
+        //         )
+        //       ]
+        //     )
+        //   ],
+        // ),
   }
 }
 
@@ -113,18 +153,23 @@ class DateSelectorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(1),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _dayColumn("T", "05"),
-          _dayColumn("F", "06"),
-          _dayColumn("S", "07"),
-          _dayColumn("S", "08"),
-          _dayColumn("M", "09"),
-          _dayColumn("T", "10"),
-          _dayColumn("W", "11"),
-        ]
-      ),
+      child: 
+      // SingleChildScrollView(
+      //   scrollDirection: Axis.horizontal,
+      //   child: 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _dayColumn("T", "05"),
+            _dayColumn("F", "06"),
+            _dayColumn("S", "07"),
+            _dayColumn("S", "08"),
+            _dayColumn("M", "09"),
+            _dayColumn("T", "10"),
+            _dayColumn("W", "11"),
+          ]
+        ),
+      // ),
     );
   }
 }
