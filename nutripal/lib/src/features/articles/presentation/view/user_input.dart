@@ -24,7 +24,7 @@ class _UserInputPageState extends State<UserInputPage> {
   
   final genderOptions = ["Male", "Female"];
   final workoutOptions = ["0-2", "3-5", "6+"];
-  final goalOptions = ["Gain Weight", "Maintain", "Lose Weight"];
+  final goalOptions = ["Lose Weight", "Maintain", "Gain Weight"];
 
   @override
   void dispose() {
@@ -66,17 +66,20 @@ class _UserInputPageState extends State<UserInputPage> {
               selected: goalIndex,
               onChanged: (i) => setState(() => goalIndex = i),
             ),
-            _TextFieldSection(
-                title: "Desired Weight:", controller: desiredWeightController, hintText: "Weight"),
+            if (goalIndex != 1 && goalIndex != -1)
+              _TextFieldSection(
+                  title: "Desired Weight:", controller: desiredWeightController, hintText: "Weight"
+              ),
             ElevatedButton(
               onPressed: () {
-                if (genderIndex == -1 ||
-                      workoutIndex == -1 ||
-                      goalIndex == -1 ||
-                      heightController.text.isEmpty ||
-                      weightController.text.isEmpty ||
-                      dobController.text.isEmpty ||
-                      desiredWeightController.text.isEmpty) {
+                if (
+                  (genderIndex == -1 ||
+                  workoutIndex == -1 ||
+                  heightController.text.isEmpty ||
+                  weightController.text.isEmpty ||
+                  dobController.text.isEmpty) ||
+                  (goalIndex == -1 || ( (goalIndex == 0 || goalIndex == 2) && desiredWeightController.text.isEmpty))
+                ) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Please fill all fields")));
                     return;
@@ -144,7 +147,7 @@ class _MultipleChoiceSection extends StatelessWidget {
                 label: Text(options[index]),
                 selected: selected == index,
                 onSelected: (selected) {
-                  if (selected) onChanged(index);
+                  onChanged(index);
                 },
               );
             })
