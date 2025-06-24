@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:nutripal/src/features/articles/presentation/view/home_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_input.dart';
 import 'package:nutripal/src/features/articles/presentation/view/settings.dart';
 import 'package:nutripal/src/features/articles/presentation/view/analytic.dart';
+import 'features/articles/presentation/viewmodel/user_profile_store.dart';
+
+// class UserInputData extends ChangeNotifier {
+//   final List<UserInputData> _inputs = [];
+//   List<UserInputData> get inputs => _inputs;
+
+//   void addInput(UserInputData data) {
+//     _inputs.add(data);
+//     notifyListeners();
+//   }
+// }
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => UserProfileStore(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatefulWidget {
@@ -34,6 +51,13 @@ class _MainAppState extends State<MainApp> {
   void _onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+      _showUserInput = false;
+    });
+  }
+
+  void _closeUserInput() {
+    setState(() {
+      _showUserInput = false;
     });
   }
   
@@ -42,7 +66,9 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       home: Scaffold(          
         body: SafeArea(
-          child: _showUserInput ? UserInputPage() : _pages[_currentIndex], 
+          child: _showUserInput
+            ? UserInputPage(onConfirmed: _closeUserInput)
+            : _pages[_currentIndex], 
         ), 
         
         floatingActionButton: _currentIndex == 0 // HomePage index

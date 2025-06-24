@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../viewmodel/user_profile_store.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final profile = Provider.of<UserProfileStore>(context).input;
+
+    return profile == null
+      ? Center(child: Text("No Profile Data"))
+      : Column(
       children: [
         HeaderSection(),
         DateSelectorRow(),
