@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../domain/user_profile_input.dart';
-import '../viewmodel/user_profile_store.dart';
+import '../../../domain/user_profile_input.dart';
+import '../../viewmodel/user_profile_store.dart';
 import 'package:intl/intl.dart';
 
 class UserInputPage extends StatefulWidget {
@@ -21,7 +21,6 @@ class _UserInputPageState extends State<UserInputPage> {
   final heightController = TextEditingController();
   final weightController = TextEditingController();
   final dobController = TextEditingController();
-  final desiredWeightController = TextEditingController();
   
   final genderOptions = ["Male", "Female"];
   final workoutOptions = ["0-2", "3-5", "6+"];
@@ -32,7 +31,6 @@ class _UserInputPageState extends State<UserInputPage> {
     heightController.dispose();
     weightController.dispose();
     dobController.dispose();
-    desiredWeightController.dispose();
     super.dispose();
   }
 
@@ -67,9 +65,7 @@ class _UserInputPageState extends State<UserInputPage> {
               onChanged: (i) => setState(() => goalIndex = i),
             ),
             if (goalIndex != 1 && goalIndex != -1)
-              _TextFieldSection(
-                  title: "Desired Weight:", controller: desiredWeightController, hintText: "Weight"
-              ),
+              _DesiredWeightSection(),
             ElevatedButton(
               onPressed: () {
                 if (
@@ -258,7 +254,8 @@ class _DateOfBirthSectionState extends State<_DateOfBirthSection> {
 }
 
 class _DesiredWeightSection extends StatefulBuilder {
-  
+  final weightController;
+  const _DesiredWeightSection({super.key, required this.weightController});
   State<_DesiredWeightSection> createState() => _DesiredWeightSectionState();
 }
 
@@ -266,7 +263,7 @@ class _DesiredWeightSectionState extends State<_DesiredWeightSection> {
   
   @override
   Widget build(BuildContext context) {
-    
+    var weight = weightController.text.value;
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Column(
