@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../domain/user_profile_input.dart';
 import '../viewmodel/user_profile_store.dart';
+import 'package:intl/intl.dart';
 
 class UserInputPage extends StatefulWidget {
   final VoidCallback onConfirmed;
@@ -58,8 +59,7 @@ class _UserInputPageState extends State<UserInputPage> {
                 title: "Height:", controller: heightController, hintText: "Height input"),
             _TextFieldSection(
                 title: "Weight:", controller: weightController, hintText: "Weight input"),
-            _TextFieldSection(
-                title: "DOB:", controller: dobController, hintText: "Date of birth"),
+            _DateOfBirthSection(),
             _MultipleChoiceSection(
               title: "Goal",
               options: goalOptions,
@@ -196,5 +196,101 @@ class _TextFieldSection extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _DateOfBirthSection extends StatefulWidget {
+  @override
+  State<_DateOfBirthSection> createState() => _DateOfBirthSectionState();
+}
+
+class _DateOfBirthSectionState extends State<_DateOfBirthSection> {
+  DateTime? selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
+    var date = selectedDate;
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            "Date of birth:",
+            style: TextStyle(
+              fontWeight: FontWeight.bold
+            ),
+          ),
+
+          SizedBox(width: 20),
+
+          Expanded(
+            child: Row(
+              children: [
+                Text(
+                  date == null
+                    ? "You haven't picked a date yet."
+                    : DateFormat("dd/MM/yyyy").format(date),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.calendar_today),
+                  onPressed: () async {
+                    var pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: date ?? DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2050)
+                    );
+
+                    setState(() {
+                      selectedDate = pickedDate;
+                    });
+                  },
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _DesiredWeightSection extends StatefulBuilder {
+  
+  State<_DesiredWeightSection> createState() => _DesiredWeightSectionState();
+}
+
+class _DesiredWeightSectionState extends State<_DesiredWeightSection> {
+  
+  @override
+  Widget build(BuildContext context) {
+    
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Text(
+            "Desired Weight",
+            style: TextStyle(
+              fontWeight: FontWeight.bold
+            ),
+          ),
+
+          Slider(
+            value: weight,
+            onChanged: (newWeight) {
+              setState(() {
+                weight = newWeight;
+              })
+            },
+            label: "$weight",
+            min: 5,
+            max: double.infinity
+          )
+        ],
+      ),
+    ) 
   }
 }
