@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nutripal/src/features/articles/presentation/viewmodel/user_profile_store.dart';
+import 'package:provider/provider.dart';
 
 class MultipleChoicePageWithPlainText extends StatefulWidget {
   final String heading;
@@ -9,7 +11,7 @@ class MultipleChoicePageWithPlainText extends StatefulWidget {
     super.key,
     required this.heading,
     required this.description,
-    required this.options
+    required this.options,
   });
 
   @override
@@ -75,6 +77,12 @@ class _MultipleChoicePageWithPlainTextState extends State<MultipleChoicePageWith
                 setState(() {
                   selected = i;
                 });
+
+                final store = Provider.of<UserProfileStore>(context, listen: false);
+                // Example for gender page, use setGender
+                if (widget.heading.toLowerCase().contains("gender")) {
+                  store.setGender(widget.options[i]);
+                }
               },
             
               showCheckmark: false,

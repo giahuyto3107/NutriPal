@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/gender_page.dart';
-
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/goal_page.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/workout_frequency_page.dart';
+import 'package:nutripal/src/features/articles/presentation/viewmodel/form_progress_view_model.dart';
+import 'package:nutripal/src/features/articles/presentation/viewmodel/user_profile_store.dart';
+import 'package:provider/provider.dart';
 
 // import 'package:provider/provider.dart';
 // import 'package:intl/intl.dart';
@@ -17,9 +21,27 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
   int _currentStep = 0;
 
   void nextPage() {
+    final store = Provider.of<UserProfileStore>(context, listen: false);
+    if (_currentStep == 0 && (store.input.gender == null || store.input.gender!.isEmpty)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select your gender.')),
+      );
+      return;
+    }
     if (_currentStep < 8) {
-      setState(() => _currentStep++);
-      _controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+      if (_currentStep == 5 && store.input.goal!.toLowerCase() == "maintain") {
+        setState(() => _currentStep += 2);
+        _controller.animateToPage(_controller.page!.toInt() + 2, duration: Duration(milliseconds: 300), curve: Curves.ease);
+        Provider.of<FormProgressViewModel>(context, listen: false).setStep(7);  
+      }
+
+      // Main flow
+      else {
+        setState(() => _currentStep++);
+        _controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+        Provider.of<FormProgressViewModel>(context, listen: false).nextStep();
+      }
+      
     }
 
     else if (_currentStep == 8) {
@@ -28,9 +50,19 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
   }
 
   void prevPage() {
+    final store = Provider.of<UserProfileStore>(context, listen: false);
     if (_currentStep > 0) {
-      setState(() => _currentStep--);
-      _controller.previousPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+      if (_currentStep == 7 && store.input.goal!.toLowerCase() == "maintain") {
+        setState(() => _currentStep -= 2);
+        _controller.animateToPage(_controller.page!.toInt() - 2, duration: Duration(milliseconds: 300), curve: Curves.ease);
+        Provider.of<FormProgressViewModel>(context, listen: false).setStep(5);  
+      }
+
+      else {
+        setState(() => _currentStep--);
+        _controller.previousPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+        Provider.of<FormProgressViewModel>(context, listen: false).prevStep();
+      }      
     }
 
     else if (_currentStep == 0) {
@@ -46,7 +78,16 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
         onBack: prevPage,
         child: GenderPage(),
       ),
-      
+      StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
+        child: WorkoutFrequencyPage(),
+      ),
+      StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
+        child: GoalPage(),
+      ),
       // workoutFrequencyPage(),
           // HeightAndWeightPage(),
       // Add other pages
@@ -82,17 +123,19 @@ class StepPageWrapper extends StatelessWidget {
         Row(
           children: [
             IconButton(
-              onPressed: () => Navigator.of(context).maybePop(),
+              onPressed: onBack,
               icon: Icon(Icons.arrow_back)
             ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 16.0),
-                child: LinearProgressIndicator(
-                  value: 0.2, // customize progress
-                  backgroundColor: Color(0xFFECE6F5),
-                  valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 0, 0, 0)),
-                  minHeight: 4,
+                child: Consumer<FormProgressViewModel>(
+                  builder: (context, progressModel, _) => LinearProgressIndicator(
+                    value: progressModel.progress, // customize progress
+                    backgroundColor: Color(0xFFECE6F5),
+                    valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 0, 0, 0)),
+                    minHeight: 4,
+                  ),
                 ),
               ),
             ),

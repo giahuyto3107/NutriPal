@@ -9,7 +9,7 @@ class GenderPage extends StatelessWidget {
     return MultipleChoicePageWithPlainText(
       heading: "Choose your Gender",
       description: "This will be used to calibrate your custom plan",
-      options: ["Male", "Female", "Other"]
+      options: ["Male", "Female", "Other"],
     );
   }
 }

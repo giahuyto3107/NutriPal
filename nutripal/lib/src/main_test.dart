@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/gender_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/user_profile_input.dart';
+import 'package:nutripal/src/features/articles/presentation/viewmodel/form_progress_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:nutripal/src/features/articles/presentation/view/home_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/settings.dart';
@@ -19,9 +20,12 @@ import 'features/articles/presentation/viewmodel/user_profile_store.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => UserProfileStore(),
-      child: const MainApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProfileStore()),
+        ChangeNotifierProvider(create: (_) => FormProgressViewModel(totalSteps: 9)),
+      ],
+        child: const MainApp(),
     ),
   );
 }
