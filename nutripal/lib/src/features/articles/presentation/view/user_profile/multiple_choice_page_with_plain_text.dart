@@ -83,6 +83,10 @@ class _MultipleChoicePageWithPlainTextState extends State<MultipleChoicePageWith
                 if (widget.heading.toLowerCase().contains("gender")) {
                   store.setGender(widget.options[i]);
                 }
+
+                if (widget.heading.toLowerCase().contains("goal")) {
+                  store.setGoal(widget.options[i]);
+                }
               },
             
               showCheckmark: false,

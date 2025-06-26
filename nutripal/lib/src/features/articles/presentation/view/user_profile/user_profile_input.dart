@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/ask_for_notification_page.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/date_of_birth_page.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/desired_weight.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/gender_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/goal_page.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/height_and_weight_page.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/how_fast_page.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/thank.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/workout_frequency_page.dart';
 import 'package:nutripal/src/features/articles/presentation/viewmodel/form_progress_view_model.dart';
 import 'package:nutripal/src/features/articles/presentation/viewmodel/user_profile_store.dart';
@@ -18,17 +24,17 @@ class MultipleStepForm extends StatefulWidget {
 
 class _MultipleStepFormState extends State<MultipleStepForm> {
   final PageController _controller = PageController();
-  int _currentStep = 0;
+  int _currentStep = 1;
 
   void nextPage() {
     final store = Provider.of<UserProfileStore>(context, listen: false);
-    if (_currentStep == 0 && (store.input.gender == null || store.input.gender!.isEmpty)) {
+    if (_currentStep == 1 && (store.input.gender == null || store.input.gender!.isEmpty)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please select your gender.')),
       );
       return;
     }
-    if (_currentStep < 8) {
+    if (_currentStep < 9) {
       if (_currentStep == 5 && store.input.goal!.toLowerCase() == "maintain") {
         setState(() => _currentStep += 2);
         _controller.animateToPage(_controller.page!.toInt() + 2, duration: Duration(milliseconds: 300), curve: Curves.ease);
@@ -44,14 +50,14 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
       
     }
 
-    else if (_currentStep == 8) {
+    else if (_currentStep == 9) {
       // Move to HomePage
     }
   }
 
   void prevPage() {
     final store = Provider.of<UserProfileStore>(context, listen: false);
-    if (_currentStep > 0) {
+    if (_currentStep > 1) {
       if (_currentStep == 7 && store.input.goal!.toLowerCase() == "maintain") {
         setState(() => _currentStep -= 2);
         _controller.animateToPage(_controller.page!.toInt() - 2, duration: Duration(milliseconds: 300), curve: Curves.ease);
@@ -65,7 +71,7 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
       }      
     }
 
-    else if (_currentStep == 0) {
+    else if (_currentStep == 1) {
       // Move back to introduction
     }
   }
@@ -86,11 +92,38 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
       StepPageWrapper(
         onNext: nextPage,
         onBack: prevPage,
+        child: HeightAndWeightPage(),
+      ),
+            StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
+        child: DateOfBirthPage(),
+      ),
+      StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
         child: GoalPage(),
       ),
-      // workoutFrequencyPage(),
-          // HeightAndWeightPage(),
-      // Add other pages
+      StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
+        child: DesiredWeight(),
+      ),
+            StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
+        child: HowFastPage(),
+      ),
+            StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
+        child: AskForNotificationPage(),
+      ),
+            StepPageWrapper(
+        onNext: nextPage,
+        onBack: prevPage,
+        child: Thank(),
+      ),
     ];
 
     return Padding(
