@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:nutripal/src/features/articles/presentation/view/home_page.dart';
-import 'package:nutripal/src/features/articles/presentation/view/user_profile/user_input_old.dart';
 import 'package:nutripal/src/features/articles/presentation/view/settings.dart';
 import 'package:nutripal/src/features/articles/presentation/view/analytic.dart';
 import 'features/articles/presentation/viewmodel/user_profile_store.dart';
@@ -66,9 +65,7 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       home: Scaffold(          
         body: SafeArea(
-          child: _showUserInput
-            ? UserInputPage(onConfirmed: _closeUserInput)
-            : _pages[_currentIndex], 
+          child: _pages[_currentIndex], 
         ), 
         
         floatingActionButton: _currentIndex == 0 // HomePage index
