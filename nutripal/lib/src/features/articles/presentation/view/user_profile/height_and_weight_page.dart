@@ -103,7 +103,15 @@ class _ImperialContent extends StatefulWidget {
 
 class _ImperialContentState extends State<_ImperialContent> {
   int heightFt = 5, heightIn = 5, weightLb = 119;
-  int height = 0;
+  int get height => (heightFt * 30.48).round() + (heightIn * 2.54).round();
+
+  @override
+  void initState() {
+    super.initState();
+    final store = Provider.of<UserProfileStore>(context, listen: false);
+    store.setHeight(height.toString());
+    store.setWeight((weightLb * 0.45359237).toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +136,6 @@ class _ImperialContentState extends State<_ImperialContent> {
                   value: heightFt,
                   onChanged: (val) => setState(() {
                     heightFt = val;
-                    height += (heightFt * 30.48).round();
                     final store = Provider.of<UserProfileStore>(context, listen: false);
                     store.setHeight(height.toString());
                   }),
@@ -139,7 +146,6 @@ class _ImperialContentState extends State<_ImperialContent> {
                   value: heightIn,
                   onChanged: (val) => setState(() {
                     heightIn = val;
-                    height += (heightIn * 2.54).round();
                     final store = Provider.of<UserProfileStore>(context, listen: false);
                     store.setHeight(height.toString());
                   }),
@@ -182,7 +188,14 @@ class _MetricContent extends StatefulWidget {
 
 class _MetricContentState extends State<_MetricContent> {
   int heightCm = 165, weightKg = 54;
-
+  
+  @override
+  void initState() {
+    super.initState();
+    final store = Provider.of<UserProfileStore>(context, listen: false);
+    store.setHeight(heightCm.toString());
+    store.setWeight(weightKg.toString());
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
