@@ -35,8 +35,13 @@ class UserProfileStore extends ChangeNotifier {
     notifyListeners();
   }
 
-    void setDesiredWeight(String desiredWeight) {
+  void setDesiredWeight(String desiredWeight) {
     _input.desiredWeight = desiredWeight;
+    notifyListeners();
+  }
+
+  void setReachingGoalSpeed(String reachingGoalSpeed) {
+    _input.reachingGoalSpeed = reachingGoalSpeed;
     notifyListeners();
   }
 

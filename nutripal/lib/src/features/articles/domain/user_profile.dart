@@ -6,6 +6,7 @@ class UserProfile {
   String? dob;
   String? goal;
   String? desiredWeight;
+  String? reachingGoalSpeed;
 
   UserProfile({
     this.gender,
@@ -15,5 +16,6 @@ class UserProfile {
     this.dob,
     this.goal,
     this.desiredWeight,
+    this.reachingGoalSpeed
   });
 }

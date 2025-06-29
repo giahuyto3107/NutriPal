@@ -125,14 +125,7 @@ class ContentSectionState extends State<ContentSection> {
                 });
 
                 final store = Provider.of<UserProfileStore>(context, listen: false);
-                // Example for gender page, use setGender
-                if (widget.heading.toLowerCase().contains("gender")) {
-                  store.setGender(widget.options[i]);
-                }
-
-                if (widget.heading.toLowerCase().contains("goal")) {
-                  store.setGoal(widget.options[i]);
-                }
+                store.setReachingGoalSpeed(widget.options[i]);
               },
             
               showCheckmark: false,
