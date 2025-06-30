@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:nutripal/src/features/articles/presentation/view/user_profile/multiple_choice_page_with_plain_text.dart';
 
 class DesiredWeight extends StatelessWidget {
   const DesiredWeight({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultipleChoicePageWithPlainText(
-      heading: "Desired Weight",
-      description: "This will be used to calibrate your custom plan",
-      options: ["Gain Weight", "Maintain", "Lose Weight"],
+return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Choose your desired weight?",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 34
+          ),
+        ),
+
+        SizedBox(height: 3),
+
+        SizedBox(height: 12),
+
+        
+      ],
     );
   }
 }

@@ -240,7 +240,15 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
               final enabled = isStepValid(store);
               return ElevatedButton(
                 onPressed: enabled ? widget.onNext : null,
-                child: Text("Next")
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black
+                ),
+                child: Text(
+                  "Next",
+                  style: TextStyle(
+                    color: Colors.white
+                  )
+                )
               );
             },
             

@@ -9,18 +9,18 @@ class HeightAndWeightPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HeightWeightPicker();
+    return _HeightWeightPicker();
   }
 }
 
-class HeightWeightPicker extends StatefulWidget {
-  const HeightWeightPicker({super.key});
+class _HeightWeightPicker extends StatefulWidget {
+  const _HeightWeightPicker({super.key});
 
   @override
-  _HeightWeightPickerState createState() => _HeightWeightPickerState();
+  State<_HeightWeightPicker> createState() => _HeightWeightPickerState();
 }
 
-class _HeightWeightPickerState extends State<HeightWeightPicker> {
+class _HeightWeightPickerState extends State<_HeightWeightPicker> {
   bool isImperial = true;
 
   @override
@@ -108,9 +108,11 @@ class _ImperialContentState extends State<_ImperialContent> {
   @override
   void initState() {
     super.initState();
-    final store = Provider.of<UserProfileStore>(context, listen: false);
-    store.setHeight(height.toString());
-    store.setWeight((weightLb * 0.45359237).toString());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final store = Provider.of<UserProfileStore>(context, listen: false);
+      store.setHeight(height.toString());
+      store.setWeight((weightLb * 0.45359237).toString());
+    });
   }
 
   @override
