@@ -65,6 +65,8 @@ class _HeightWeightPickerState extends State<_HeightWeightPicker> {
                   Switch(
                     onChanged: (val) => setState(() {
                       isImperial = !val;
+                      final store = Provider.of<UserProfileStore>(context, listen: false);
+                      store.setIsImperial(isImperial == true);
                     }),
                     value: !isImperial,
                   ),
@@ -112,6 +114,7 @@ class _ImperialContentState extends State<_ImperialContent> {
       final store = Provider.of<UserProfileStore>(context, listen: false);
       store.setHeight(height.toString());
       store.setWeight((weightLb * 0.45359237).toString());
+      store.setIsImperial(true);
     });
   }
 

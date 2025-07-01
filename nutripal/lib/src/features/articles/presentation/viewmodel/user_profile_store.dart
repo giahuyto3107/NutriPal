@@ -49,4 +49,9 @@ class UserProfileStore extends ChangeNotifier {
     _input = input;
     notifyListeners();
   }
+
+  void setIsImperial(bool boolValue) {
+    _input.isImperial = boolValue;
+    notifyListeners();
+  }
 }

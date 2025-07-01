@@ -7,6 +7,7 @@ class UserProfile {
   String? goal;
   String? desiredWeight;
   String? reachingGoalSpeed;
+  bool? isImperial;
 
   UserProfile({
     this.gender,
@@ -16,6 +17,7 @@ class UserProfile {
     this.dob,
     this.goal,
     this.desiredWeight,
-    this.reachingGoalSpeed
+    this.reachingGoalSpeed,
+    this.isImperial
   });
 }

@@ -61,94 +61,114 @@ class _DateOfBirthPageState extends State<DateOfBirthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Day Picker
-        SizedBox(
-          width: 60,
-          height: 120,
-          child: ListWheelScrollView.useDelegate(
-            itemExtent: 32,
-            diameterRatio: 0.9,
-            perspective: 0.003,
-            physics: FixedExtentScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            controller: dayController,
-            onSelectedItemChanged: (index) => setState(() {
-              selectedDay = index+1;
-              final store = Provider.of<UserProfileStore>(context, listen: false);
-              store.setDOB(dob);
-            }),
-            childDelegate: ListWheelChildBuilderDelegate(
-              builder: (context, index) {
-                if (index < 0 || index >= dayList.length) return null;
-                return Center(
-                  child: Text('${dayList[index]}'),
-                );
-              },
-            ),
+        Text(
+          "Height & Weight",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 34,
           ),
         ),
-        // Month Picker
-        SizedBox(
-          width: 100,
-          height: 120,
-          child: ListWheelScrollView.useDelegate(
-            itemExtent: 32,
-            diameterRatio: 0.9,
-            perspective: 0.003,
-            physics: FixedExtentScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            controller: monthController,
-            onSelectedItemChanged: (index) => setState(() {
-              monthIndex = index;
-              selectedMonth = index + 1;
-              final store = Provider.of<UserProfileStore>(context, listen: false);
-              store.setDOB(dob);
-              monthIndex = index;
-            } ),
-            childDelegate: ListWheelChildBuilderDelegate(
-              builder: (context, index) {
-                if (index < 0 || index >= monthList.length) return null;
-                return Center(
-                  child: Text('${monthList[index]}'),
-                );
-              },
-            ),
+        SizedBox(height: 3),
+        Text(
+          "This will be used to calibrate your custom plan",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 17,
+            color: Color(0xFF18171C),
           ),
         ),
-        // Year Picker
-        SizedBox(
-          width: 80,
-          height: 120,
-          child: ListWheelScrollView.useDelegate(
-            itemExtent: 32,
-            diameterRatio: 0.9,
-            perspective: 0.003,
-            physics: FixedExtentScrollPhysics(
-              parent: BouncingScrollPhysics(),
+        SizedBox(height: 150), // Add some space before the pickers
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Day Picker
+            SizedBox(
+              width: 60,
+              height: 120,
+              child: ListWheelScrollView.useDelegate(
+                itemExtent: 32,
+                diameterRatio: 0.9,
+                perspective: 0.003,
+                physics: FixedExtentScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                controller: dayController,
+                onSelectedItemChanged: (index) => setState(() {
+                  selectedDay = index + 1;
+                  final store = Provider.of<UserProfileStore>(context, listen: false);
+                  store.setDOB(dob);
+                }),
+                childDelegate: ListWheelChildBuilderDelegate(
+                  builder: (context, index) {
+                    if (index < 0 || index >= dayList.length) return null;
+                    return Center(
+                      child: Text('${dayList[index]}'),
+                    );
+                  },
+                ),
+              ),
             ),
-            controller: yearController,
-            onSelectedItemChanged: (index) => setState(() {
-              selectedYear = index + 1;
-              final store = Provider.of<UserProfileStore>(context, listen: false);
-              store.setDOB(dob);
-              monthIndex = index;
-            }),
-            childDelegate: ListWheelChildBuilderDelegate(
-              builder: (context, index) {
-                if (index < 0 || index >= yearList.length) return null;
-                return Center(
-                  child: Text('${yearList[index]}'),
-                );
-              },
+            // Month Picker
+            SizedBox(
+              width: 100,
+              height: 120,
+              child: ListWheelScrollView.useDelegate(
+                itemExtent: 32,
+                diameterRatio: 0.9,
+                perspective: 0.003,
+                physics: FixedExtentScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                controller: monthController,
+                onSelectedItemChanged: (index) => setState(() {
+                  monthIndex = index;
+                  selectedMonth = index + 1;
+                  final store = Provider.of<UserProfileStore>(context, listen: false);
+                  store.setDOB(dob);
+                }),
+                childDelegate: ListWheelChildBuilderDelegate(
+                  builder: (context, index) {
+                    if (index < 0 || index >= monthList.length) return null;
+                    return Center(
+                      child: Text('${monthList[index]}'),
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
+            // Year Picker
+            SizedBox(
+              width: 80,
+              height: 120,
+              child: ListWheelScrollView.useDelegate(
+                itemExtent: 32,
+                diameterRatio: 0.9,
+                perspective: 0.003,
+                physics: FixedExtentScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                controller: yearController,
+                onSelectedItemChanged: (index) => setState(() {
+                  selectedYear = index + 1;
+                  final store = Provider.of<UserProfileStore>(context, listen: false);
+                  store.setDOB(dob);
+                }),
+                childDelegate: ListWheelChildBuilderDelegate(
+                  builder: (context, index) {
+                    if (index < 0 || index >= yearList.length) return null;
+                    return Center(
+                      child: Text('${yearList[index]}'),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ],
-    );;
+    );
   }
 }
