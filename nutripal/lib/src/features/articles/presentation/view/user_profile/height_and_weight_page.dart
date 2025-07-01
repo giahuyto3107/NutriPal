@@ -197,9 +197,11 @@ class _MetricContentState extends State<_MetricContent> {
   @override
   void initState() {
     super.initState();
-    final store = Provider.of<UserProfileStore>(context, listen: false);
-    store.setHeight(heightCm.toString());
-    store.setWeight(weightKg.toString());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final store = Provider.of<UserProfileStore>(context, listen: false);
+      store.setHeight(heightCm.toString());
+      store.setWeight(weightKg.toString());
+    });
   }
   @override
   Widget build(BuildContext context) {
