@@ -65,7 +65,7 @@ class _DateOfBirthPageState extends State<DateOfBirthPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Height & Weight",
+          "When were you born",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 34,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nutripal/src/features/articles/presentation/view/user_profile/appreciate_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/ask_for_notification_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/date_of_birth_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/desired_weight.dart';
@@ -6,7 +7,6 @@ import 'package:nutripal/src/features/articles/presentation/view/user_profile/ge
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/goal_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/height_and_weight_page.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/how_fast_page.dart';
-import 'package:nutripal/src/features/articles/presentation/view/user_profile/thank.dart';
 import 'package:nutripal/src/features/articles/presentation/view/user_profile/workout_frequency_page.dart';
 import 'package:nutripal/src/features/articles/presentation/viewmodel/form_progress_view_model.dart';
 import 'package:nutripal/src/features/articles/presentation/viewmodel/user_profile_store.dart';
@@ -151,7 +151,7 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
         onBack: prevPage,
         currentStep: _currentStep,
         stepValidators: _stepValidators,
-        child: Thank(),
+        child: AppreaciatePage(),
       ),
     ];
 
@@ -234,7 +234,6 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
 
         SizedBox(
           width: double.infinity,
-          
           child: Consumer<UserProfileStore>(
             builder: (context, store, _) {
               final enabled = isStepValid(store);
@@ -243,11 +242,16 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black
                 ),
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                    color: Colors.white
-                  )
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 13),
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600
+                    )
+                  ),
                 )
               );
             },

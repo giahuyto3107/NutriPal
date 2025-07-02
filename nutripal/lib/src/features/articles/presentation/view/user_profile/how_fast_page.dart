@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nutripal/src/features/articles/presentation/viewmodel/user_profile_store.dart';
 import 'package:provider/provider.dart';
 
@@ -67,31 +68,43 @@ class _SpeedSliderState extends State<_SpeedSlider> {
 
   @override
   Widget build(BuildContext context) {
+    bool isTurtleHighlighted = false;
+    bool isRabbitHighlighted = false;
+    bool isPantherHighlighted = false;
+
     final store = Provider.of<UserProfileStore>(context, listen: false);
     bool isImperial = store.input.isImperial!;
     String recommendation;
+
     if (isImperial) {
-      if (weight >= 11 && weight <= 20) {
+      if (weight >= 1.1 && weight <= 2.0) {
         recommendation = "Recommended";
+        isRabbitHighlighted = true;
       }
-      else if (weight < 11 ) {
+      else if (weight < 1.1 ) {
         recommendation = "Slow and Steady";
+        isTurtleHighlighted = true;
       }
       else {
         recommendation = "You may feel very tired and develop loose skin";
+        isPantherHighlighted = true;
       }
     }
     else {
       if (weight >= 0.5 && weight <= 1.0) {
         recommendation = "Recommended";
+        isTurtleHighlighted = true;
       }
       else if (weight < 0.5) {
         recommendation = "Slow and Steady";
+        isRabbitHighlighted = true;
       }
       else {
         recommendation = "You may feel very tired and develop loose skin";
+        isPantherHighlighted = true;
       }
     }
+
     return Column(
       children: [
         Text(
@@ -101,17 +114,67 @@ class _SpeedSliderState extends State<_SpeedSlider> {
             fontSize: 25
           ),
         ),
-        Slider(
-          min: isImperial ? 0.2 : 0.1,
-          max: isImperial ? 3.0 : 1.5,
-          value: weight,
-          divisions: isImperial ? 28 : 14,
-          onChanged: (newWeight) {
-            setState(() {
-              weight = newWeight;
-            });
-          },
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SvgPicture.asset(
+              'assets/images/turtle.svg',
+              width: 50,
+              height: 50,
+              color: isTurtleHighlighted ? Color(0xffde9b67) : null
+            ),
+            SvgPicture.asset(
+              'assets/images/rabbit.svg',
+              width: 50,
+              height: 50,
+              color: isRabbitHighlighted ? Color(0xffde9b67) : null
+            ),
+            SvgPicture.asset(
+              'assets/images/panther.svg',
+              width: 50,
+              height: 50,
+              color: isPantherHighlighted ? Color(0xffde9b67) : null
+            ),
+          ],
         ),
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            tickMarkShape: SliderTickMarkShape.noTickMark
+          ),
+          child: Slider(
+            min: isImperial ? 0.2 : 0.1,
+            max: isImperial ? 3.0 : 1.5,
+            value: weight,
+            thumbColor: Colors.black,
+            inactiveColor: Color(0xfff9f8fe),
+            activeColor: Colors.black,
+            divisions: isImperial ? 28 : 14,
+            onChanged: (newWeight) {
+              setState(() {
+                weight = newWeight;
+                final store = Provider.of<UserProfileStore>(context, listen: false);
+                store.setReachingGoalSpeed(weight.toString()); // or whatever your setter is
+              });
+            },
+          ),
+        ),
+        SizedBox(height: 3),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ...(isImperial 
+              ?
+              [Text("0.2 lbs"),
+              Text("1.5 lbs"),
+              Text("3.0 lbs")]
+              :
+              [Text("0.1 kg"),
+              Text("0.8 kg"),
+              Text("1.5 kg")]
+            ),            
+          ],
+        ),
+        SizedBox(height: 25),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Card(
@@ -119,20 +182,19 @@ class _SpeedSliderState extends State<_SpeedSlider> {
             child: SizedBox(
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
+                padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
                 child: Text(
                   recommendation,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 14,
                   ),
                 ),
               ),
             )
           ),
         )
-        
       ]
     );
   }
