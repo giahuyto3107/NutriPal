@@ -151,16 +151,18 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
         onBack: prevPage,
         currentStep: _currentStep,
         stepValidators: _stepValidators,
-        child: AppreaciatePage(),
+        child: SizedBox.expand(child: AppreaciatePage()),
       ),
     ];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
-      child: PageView(
-        controller: _controller,
-        physics: NeverScrollableScrollPhysics(),
-        children: pages
+      child: SizedBox.expand(
+        child: PageView(
+          controller: _controller,
+          physics: NeverScrollableScrollPhysics(),
+          children: pages
+        ),
       ),
     );
   }
