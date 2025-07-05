@@ -23,9 +23,9 @@ class MultipleStepForm extends StatefulWidget {
 }
 
 class _MultipleStepFormState extends State<MultipleStepForm> {
-  final PageController _controller = PageController();
   int _currentStep = 1;
   late final Map<int, bool Function(UserProfileStore)> _stepValidators;
+  late List<Widget> _pages;
 
   @override
   void initState() {
@@ -39,7 +39,84 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
       5: (store) => _currentStep == 5 && store.input.goal != null && store.input.goal!.isNotEmpty,
       6: (store) => _currentStep == 6 && store.input.desiredWeight != null && store.input.desiredWeight!.isNotEmpty,
       7: (store) => _currentStep == 7 && store.input.reachingGoalSpeed != null && store.input.reachingGoalSpeed!.isNotEmpty,
+      8: (store) => true,
+      9: (store) => true,
     };
+
+    _pages = [
+      StepPageWrapper(
+        key: const ValueKey('step-1'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 1,
+        stepValidators: _stepValidators,
+        child: GenderPage(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-2'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 2,
+        stepValidators: _stepValidators,
+        child: WorkoutFrequencyPage(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-3'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 3,
+        stepValidators: _stepValidators,
+        child: HeightAndWeightPage(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-4'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 4,
+        stepValidators: _stepValidators,
+        child: DateOfBirthPage(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-5'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 5,
+        stepValidators: _stepValidators,
+        child: GoalPage(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-6'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 6,
+        stepValidators: _stepValidators,
+        child: DesiredWeight(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-7'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 7,
+        stepValidators: _stepValidators,
+        child: HowFastPage(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-8'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 8,
+        stepValidators: _stepValidators,
+        child: AskForNotificationPage(),
+      ),
+      StepPageWrapper(
+        key: const ValueKey('step-9'),
+        onNext: nextPage,
+        onBack: prevPage,
+        currentStep: 9,
+        stepValidators: _stepValidators,
+        child: AppreaciatePage(key: PageStorageKey('appreaciate')),
+      ),
+    ];
   }
 
   void nextPage() {
@@ -48,14 +125,12 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
     if (_currentStep < 9) {
       if (_currentStep == 5 && store.input.goal!.toLowerCase() == "maintain") {
         setState(() => _currentStep += 2);
-        _controller.animateToPage(_controller.page!.toInt() + 2, duration: Duration(milliseconds: 300), curve: Curves.ease);
         Provider.of<FormProgressViewModel>(context, listen: false).setStep(7);  
       }
 
       // Main flow
       else {
         setState(() => _currentStep++);
-        _controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
         Provider.of<FormProgressViewModel>(context, listen: false).nextStep();
       }
       
@@ -71,13 +146,11 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
     if (_currentStep > 1) {
       if (_currentStep == 7 && store.input.goal!.toLowerCase() == "maintain") {
         setState(() => _currentStep -= 2);
-        _controller.animateToPage(_controller.page!.toInt() - 2, duration: Duration(milliseconds: 300), curve: Curves.ease);
         Provider.of<FormProgressViewModel>(context, listen: false).setStep(5);  
       }
 
       else {
         setState(() => _currentStep--);
-        _controller.previousPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
         Provider.of<FormProgressViewModel>(context, listen: false).prevStep();
       }      
     }
@@ -87,82 +160,43 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
     }
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: GenderPage(),
-      ),
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: WorkoutFrequencyPage(),
-      ),
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: HeightAndWeightPage(),
-      ),
-            StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: DateOfBirthPage(),
-      ),
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: GoalPage(),
-      ),
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: DesiredWeight(),
-      ),
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: HowFastPage(),
-      ),
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: AskForNotificationPage(),
-      ),
-      StepPageWrapper(
-        onNext: nextPage,
-        onBack: prevPage,
-        currentStep: _currentStep,
-        stepValidators: _stepValidators,
-        child: SizedBox.expand(child: AppreaciatePage()),
-      ),
-    ];
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
-      child: SizedBox.expand(
-        child: PageView(
-          controller: _controller,
-          physics: NeverScrollableScrollPhysics(),
-          children: pages
-        ),
+      child: Stack(
+        children: List.generate(_pages.length, (index) {
+          final isCurrent = _currentStep - 1 == index;
+          return IgnorePointer(
+            ignoring: !isCurrent,
+            child: Opacity(
+              opacity: isCurrent ? 1.0 : 0.0,
+              child: isCurrent
+                  ? TweenAnimationBuilder<Offset>(
+                      tween: Tween<Offset>(
+                        begin: const Offset(1, 0),
+                        end: Offset.zero,
+                      ),
+                      duration: const Duration(milliseconds: 350),
+                      curve: Curves.easeOut,
+                      builder: (context, offset, child) {
+                        return Transform.translate(
+                          offset: Offset(offset.dx * MediaQuery.of(context).size.width, 0),
+                          child: child,
+                        );
+                      },
+                      child: SizedBox.expand(
+                        child: _pages[index],
+                      ),
+                    )
+                  : SizedBox.expand(
+                      child: _pages[index],
+                    ),
+            ),
+          );
+        }),
       ),
     );
   }
@@ -172,16 +206,16 @@ class StepPageWrapper extends StatefulWidget {
   final Widget child;
   final VoidCallback? onNext;
   final VoidCallback? onBack;
+  final int? currentStep;
   final Map<int, bool Function(UserProfileStore)> stepValidators;
-  final int currentStep;
 
   const StepPageWrapper({
     super.key,
     required this.child,
     required this.onNext,
     required this.onBack,
+    required this.currentStep,
     required this.stepValidators,
-    required this.currentStep
   });
 
   @override
@@ -199,11 +233,6 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    bool isStepValid(UserProfileStore store) {
-      final validator = widget.stepValidators[widget.currentStep];
-      return validator == null ? true : validator(store);
-    }
-
     return Column(
       children: [
         Row(
@@ -238,7 +267,8 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
           width: double.infinity,
           child: Consumer<UserProfileStore>(
             builder: (context, store, _) {
-              final enabled = isStepValid(store);
+              final validator = widget.stepValidators[widget.currentStep];
+              final enabled = validator == null ? true : validator(store);
               return ElevatedButton(
                 onPressed: enabled ? widget.onNext : null,
                 style: ElevatedButton.styleFrom(
@@ -257,7 +287,6 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
                 )
               );
             },
-            
           ),
         )
       ],
