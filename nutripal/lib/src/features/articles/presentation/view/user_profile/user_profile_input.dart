@@ -165,40 +165,33 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-      child: Stack(
-        children: List.generate(_pages.length, (index) {
-          final isCurrent = _currentStep - 1 == index;
-          return IgnorePointer(
-            ignoring: !isCurrent,
-            child: Opacity(
-              opacity: isCurrent ? 1.0 : 0.0,
-              child: isCurrent
-                  ? TweenAnimationBuilder<Offset>(
-                      tween: Tween<Offset>(
-                        begin: const Offset(1, 0),
-                        end: Offset.zero,
-                      ),
-                      duration: const Duration(milliseconds: 350),
-                      curve: Curves.easeOut,
-                      builder: (context, offset, child) {
-                        return Transform.translate(
-                          offset: Offset(offset.dx * MediaQuery.of(context).size.width, 0),
-                          child: child,
-                        );
-                      },
-                      child: SizedBox.expand(
-                        child: _pages[index],
-                      ),
-                    )
-                  : SizedBox.expand(
-                      child: _pages[index],
-                    ),
-            ),
-          );
-        }),
+  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+  child: Stack(
+    children: [
+      IndexedStack(
+        index: _currentStep - 1,
+        children: _pages,
       ),
-    );
+      TweenAnimationBuilder<Offset>(
+        tween: Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ),
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeOut,
+        child: SizedBox.expand(
+          child: _pages[_currentStep - 1],
+        ),
+        builder: (context, offset, child) {
+          return Transform.translate(
+            offset: Offset(offset.dx * MediaQuery.of(context).size.width, 0),
+            child: child,
+          );
+        },
+      ),
+    ],
+  ),
+);
   }
 }
 
