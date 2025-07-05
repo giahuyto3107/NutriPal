@@ -10,13 +10,16 @@ class AppreaciatePage extends StatefulWidget {
   State<AppreaciatePage> createState() => _AppreaciatePageState();
 }
 
-class _AppreaciatePageState extends State<AppreaciatePage> {
+class _AppreaciatePageState extends State<AppreaciatePage> with AutomaticKeepAliveClientMixin {
   late ConfettiController confettiController;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
-    confettiController = ConfettiController(duration: Duration(seconds: 10));
+    confettiController = ConfettiController(); // duration: null means infinite
     confettiController.play();
   }
 
@@ -28,16 +31,17 @@ class _AppreaciatePageState extends State<AppreaciatePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SizedBox.expand(
       child: Stack(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center,
         children: [
           ConfettiWidget( 
               confettiController: confettiController,
               shouldLoop: true,
               blastDirectionality: BlastDirectionality.directional,
               blastDirection: pi / 2, // downward
-              emissionFrequency: 0.06,
+              emissionFrequency: 0.04,
               numberOfParticles: 8,
               gravity: 0.18,
                minimumSize: const Size(8, 8), // make particles bigger
