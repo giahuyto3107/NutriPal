@@ -45,9 +45,9 @@ class _SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<UserProfileStore>(context, listen: false);
-    String goal = store.input.goal!;
+    String? goal = store.input.goal;
     return Text(
-      "$goal speed per week",
+      goal != null ? "$goal speed per week" : "",
       style: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 17
@@ -73,8 +73,13 @@ class _SpeedSliderState extends State<_SpeedSlider> {
     bool isPantherHighlighted = false;
 
     final store = Provider.of<UserProfileStore>(context, listen: false);
-    bool isImperial = store.input.isImperial!;
-    String recommendation;
+    bool? isImperial = store.input.isImperial;
+    if (isImperial == null) {
+      // Show nothing or a placeholder if not set yet
+      return SizedBox.shrink();
+    }
+
+    String recommendation = "";
 
     if (isImperial) {
       if (weight >= 1.1 && weight <= 2.0) {
@@ -153,7 +158,7 @@ class _SpeedSliderState extends State<_SpeedSlider> {
               setState(() {
                 weight = newWeight;
                 final store = Provider.of<UserProfileStore>(context, listen: false);
-                store.setReachingGoalSpeed(weight.toString()); // or whatever your setter is
+                store.setReachingGoalSpeed(weight.toString());
               });
             },
           ),

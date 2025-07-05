@@ -43,9 +43,9 @@ class _SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<UserProfileStore>(context, listen: false);
-    String goal = store.input.goal!;
+    String? goal = store.input.goal;
     return Text(
-      goal,
+      goal ?? '',
       style: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 17
