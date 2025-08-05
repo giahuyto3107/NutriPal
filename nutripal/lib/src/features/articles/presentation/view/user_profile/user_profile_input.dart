@@ -35,14 +35,14 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
   void initState() {
     super.initState();
     _stepValidators = {
-      0: (store) => _currentStep == 0 && store.input.gender != null && store.input.gender!.isNotEmpty,
-      1: (store) => _currentStep == 1 && store.input.workoutFrequency != null && store.input.workoutFrequency!.isNotEmpty,
-      2: (store) => _currentStep == 2 && store.input.height != null && store.input.height!.isNotEmpty
+      0: (store) => store.input.gender != null && store.input.gender!.isNotEmpty,
+      1: (store) => store.input.workoutFrequency != null && store.input.workoutFrequency!.isNotEmpty,
+      2: (store) => store.input.height != null && store.input.height!.isNotEmpty
               && store.input.weight != null && store.input.weight!.isNotEmpty,
-      3: (store) => _currentStep == 3 && store.input.dob != null && store.input.dob!.isNotEmpty,
-      4: (store) => _currentStep == 4 && store.input.goal != null && store.input.goal!.isNotEmpty,
-      5: (store) => _currentStep == 5 && store.input.desiredWeight != null && store.input.desiredWeight!.isNotEmpty,
-      6: (store) => _currentStep == 6 && store.input.reachingGoalSpeed != null && store.input.reachingGoalSpeed!.isNotEmpty,
+      3: (store) => store.input.dob != null && store.input.dob!.isNotEmpty,
+      4: (store) => store.input.goal != null && store.input.goal!.isNotEmpty,
+      5: (store) => store.input.desiredWeight != null && store.input.desiredWeight!.isNotEmpty,
+      6: (store) => store.input.reachingGoalSpeed != null && store.input.reachingGoalSpeed!.isNotEmpty,
       7: (store) => true,
       8: (store) => true,
       9: (store) => true,
@@ -68,7 +68,6 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
       HowFastPage(),
       AskForNotificationPage(),
       AppreaciatePage(confettiController: confettiController),
-      RecommendationPage()
     ];
   }
 
@@ -82,7 +81,7 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: StepPageWrapper(
         currentStep: _currentStep,
         pages: _pages,
@@ -126,17 +125,17 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
   final double itemWidth = 200.0;
 
   void scrollToNext() {
-    // if (widget.currentStep == 1) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (_) => widget.pages[widget.currentStep+1])
-    //   );
-    // }
-
+    if (widget.currentStep == 8) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => RecommendationPage())
+      );
+      return;
+    }
     widget.pageController.animateTo(
       widget.pageController.offset + itemWidth,
 
-      duration: const Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 10),
 
       curve: Curves.easeInOut,
     );
@@ -146,7 +145,7 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
     widget.pageController.animateTo(
       widget.pageController.offset - itemWidth,
 
-      duration: const Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 10),
 
       curve: Curves.easeInOut,
     );
@@ -180,7 +179,7 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
                         }
                       },
 
-                      icon: Icon(Icons.arrow_back),
+                      icon: Icon(Icons.arrow_back_ios),
                     );
                   },
                 ),
@@ -240,8 +239,11 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
                                 widget.onStepChanged?.call(6);
                               } else {
                                 scrollToNext();
-                                final nextStep = widget.currentStep + 1;
-                                widget.onStepChanged?.call(nextStep);
+                                if (widget.currentStep != 8) {
+                                  final nextStep = widget.currentStep + 1;
+                                  widget.onStepChanged?.call(nextStep);
+                                }
+                                
                               }
                             }
                             : null,
@@ -251,7 +253,7 @@ class _StepPageWrapperState extends State<StepPageWrapper> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 13),
                       child: Text(
-                        "Next",
+                        "Continue",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,

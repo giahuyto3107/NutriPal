@@ -56,44 +56,52 @@ class _MultipleChoicePageWithPlainTextState extends State<MultipleChoicePageWith
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ChoiceChip(
-              label: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  widget.options[i],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: isSelected ? selectedTextColor : unselectedTextColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    selected = i;
+                  });
+
+                  final store = Provider.of<UserProfileStore>(context, listen: false);
+                  if (widget.heading.toLowerCase().contains("gender")) {
+                    store.setGender(widget.options[i]);
+                  }
+
+                  if (widget.heading.toLowerCase().contains("goal")) {
+                    store.setGoal(widget.options[i]);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isSelected ? selectedColor : unselectedColor,
+                  // backgroundColor: Colors.red,
+                  foregroundColor: isSelected ? selectedTextColor : unselectedTextColor,
+                  padding: const EdgeInsets.symmetric(vertical: 16), // Optional spacing
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                      width: 1,
+                      color: Color.fromARGB(255, 193, 193, 193)         
+                    )
+                  ),
+                  elevation: 0, // Optional: remove shadow if you want it flat
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Text(
+                    widget.options[i],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
-              ), 
-              selected: isSelected,
-              selectedColor: selectedColor,
-              backgroundColor: unselectedColor,
-            
-              onSelected: (bool selectedChoice) {
-                setState(() {
-                  selected = i;
-                });
-
-                final store = Provider.of<UserProfileStore>(context, listen: false);
-                // Example for gender page, use setGender
-                if (widget.heading.toLowerCase().contains("gender")) {
-                  store.setGender(widget.options[i]);
-                }
-
-                if (widget.heading.toLowerCase().contains("goal")) {
-                  store.setGoal(widget.options[i]);
-                }
-              },
-            
-              showCheckmark: false,
+              ),
             ),
           );
-        }
-          )
+        })
       ],
     );
   }

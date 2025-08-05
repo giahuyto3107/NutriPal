@@ -36,6 +36,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+      ),
       home: Scaffold(          
         body: SafeArea(
           child: MultipleStepForm(),
