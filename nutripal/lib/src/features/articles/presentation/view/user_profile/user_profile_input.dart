@@ -34,57 +34,26 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
   @override
   void initState() {
     super.initState();
-
-    // _stepValidators = {
-
-    //  0: (store) => _currentStep == 0 && store.input.gender != null && store.input.gender!.isNotEmpty,
-
-    //  1: (store) => _currentStep == 1 && store.input.workoutFrequency != null && store.input.workoutFrequency!.isNotEmpty,
-
-    //  2: (store) => _currentStep == 2 && store.input.height != null && store.input.height!.isNotEmpty
-
-    //         && store.input.weight != null && store.input.weight!.isNotEmpty,
-
-    //  3: (store) => _currentStep == 3 && store.input.dob != null && store.input.dob!.isNotEmpty,
-
-    //  4: (store) => _currentStep == 4 && store.input.goal != null && store.input.goal!.isNotEmpty,
-
-    //  5: (store) => _currentStep == 5 && store.input.desiredWeight != null && store.input.desiredWeight!.isNotEmpty,
-
-    //  6: (store) => _currentStep == 6 && store.input.reachingGoalSpeed != null && store.input.reachingGoalSpeed!.isNotEmpty,
-
-    //  7: (store) => true,
-
-    //  8: (store) => true,
-
-    //  9: (store) => true,
-
-    //  10: (store) => true, // Placeholder for the last step
-
-    // };
-
     _stepValidators = {
-      0:
-          (store) =>
-              _currentStep == 0 &&
-              store.input.gender != null &&
-              store.input.gender!.isNotEmpty,
-
-      1:
-          (store) =>
-              _currentStep == 1 &&
-              store.input.workoutFrequency != null &&
-              store.input.workoutFrequency!.isNotEmpty,
-
-      2: (store) => true,
+      0: (store) => _currentStep == 0 && store.input.gender != null && store.input.gender!.isNotEmpty,
+      1: (store) => _currentStep == 1 && store.input.workoutFrequency != null && store.input.workoutFrequency!.isNotEmpty,
+      2: (store) => _currentStep == 2 && store.input.height != null && store.input.height!.isNotEmpty
+              && store.input.weight != null && store.input.weight!.isNotEmpty,
+      3: (store) => _currentStep == 3 && store.input.dob != null && store.input.dob!.isNotEmpty,
+      4: (store) => _currentStep == 4 && store.input.goal != null && store.input.goal!.isNotEmpty,
+      5: (store) => _currentStep == 5 && store.input.desiredWeight != null && store.input.desiredWeight!.isNotEmpty,
+      6: (store) => _currentStep == 6 && store.input.reachingGoalSpeed != null && store.input.reachingGoalSpeed!.isNotEmpty,
+      7: (store) => true,
+      8: (store) => true,
+      9: (store) => true,
+      10: (store) => true, // Placeholder for the last step
     };
 
     confettiController = ConfettiController(
       duration: const Duration(seconds: 5),
     );
     _pageController.addListener(() {
-      if (_pageController.page == 2) {
-        // Assuming ConfettiPage is at index 1
+      if (_pageController.page == 8) {
         confettiController.play();
       }
     });
@@ -92,22 +61,14 @@ class _MultipleStepFormState extends State<MultipleStepForm> {
     _pages = [
       GenderPage(),
       WorkoutFrequencyPage(),
-      //  HeightAndWeightPage(),
-
-      //  DateOfBirthPage(),
-
-      //  GoalPage(),
-
-      //  DesiredWeight(),
-
-      //  HowFastPage(),
-
-      //  AskForNotificationPage(),
-      AppreaciatePage(
-        currentStep: _currentStep,
-        confettiController: confettiController,
-      ),
-      //  RecommendationPage()
+      HeightAndWeightPage(),
+      DateOfBirthPage(),
+      GoalPage(),
+      DesiredWeight(),
+      HowFastPage(),
+      AskForNotificationPage(),
+      AppreaciatePage(confettiController: confettiController),
+      RecommendationPage()
     ];
   }
 

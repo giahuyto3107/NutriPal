@@ -3,10 +3,9 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
 class AppreaciatePage extends StatefulWidget {
-  final int currentStep;
   final ConfettiController confettiController;
 
-  const AppreaciatePage({super.key, required this.currentStep, required this.confettiController});
+  const AppreaciatePage({super.key, required this.confettiController});
 
   @override
   State<AppreaciatePage> createState() => _AppreaciatePageState();
