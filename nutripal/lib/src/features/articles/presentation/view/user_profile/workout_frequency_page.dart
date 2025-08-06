@@ -74,48 +74,8 @@ class ContentSectionState extends State<ContentSection> {
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ChoiceChip(
-              label: SizedBox(
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(Icons.circle),
-
-                    SizedBox(width: 20),
-
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.options[i],
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: isSelected ? selectedTextColor : unselectedTextColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                    
-                        Text(
-                          widget.optionDescriptions[i],
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: isSelected ? selectedTextColor : unselectedTextColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ), 
-              selected: isSelected,
-              selectedColor: selectedColor,
-              backgroundColor: unselectedColor,
-            
-              onSelected: (bool selectedChoice) {
+            child: ElevatedButton(
+              onPressed: () {
                 setState(() {
                   selected = i;
                 });
@@ -123,8 +83,54 @@ class ContentSectionState extends State<ContentSection> {
                 final store = Provider.of<UserProfileStore>(context, listen: false);
                 store.setWorkoutFrequency(widget.options[i]);
               },
-            
-              showCheckmark: false,
+              
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isSelected ? selectedColor : unselectedColor,
+                foregroundColor: isSelected ? selectedTextColor : unselectedTextColor,
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                      width: 1,
+                      color: Color.fromARGB(255, 193, 193, 193)         
+                    )
+                  ),
+                  elevation: 0, // Optional: remove shadow if you want it flat
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.circle), // Or use different icons if needed
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.options[i],
+                            style: TextStyle(
+                              color: isSelected ? selectedTextColor : unselectedTextColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            widget.optionDescriptions[i],
+                            style: TextStyle(
+                              color: isSelected ? selectedTextColor : unselectedTextColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           );
         }
